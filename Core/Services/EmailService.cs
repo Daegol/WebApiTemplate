@@ -36,6 +36,10 @@ namespace Core.Services
                 email.Body = builder.ToMessageBody();
                 using var smtp = new SmtpClient();
                 smtp.Connect(_mailSettings.SmtpHost, _mailSettings.SmtpPort, SecureSocketOptions.StartTls);
+
+                //for app on production delete this line and get token from google
+                smtp.AuthenticationMechanisms.Remove("XOAUTH2");
+
                 smtp.Authenticate(_mailSettings.SmtpUser, _mailSettings.SmtpPass);
                 await smtp.SendAsync(email);
                 smtp.Disconnect(true);

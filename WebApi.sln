@@ -5,15 +5,17 @@ VisualStudioVersion = 16.0.32106.194
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi", "WebApi\WebApi.csproj", "{9FC26147-4233-44F0-8A18-3E1B00A03D9F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Identity", "Identity\Identity.csproj", "{8FADA6CF-F415-401E-BAB8-47586EC9F310}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Identity", "Identity\Identity.csproj", "{8FADA6CF-F415-401E-BAB8-47586EC9F310}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{45D2DFF5-3854-48CB-B755-2B4165BFAE6C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "Data\Data.csproj", "{45D2DFF5-3854-48CB-B755-2B4165BFAE6C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{6B7CBEBC-3813-47B0-8EC4-D00C385DC160}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "Models\Models.csproj", "{6B7CBEBC-3813-47B0-8EC4-D00C385DC160}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{B5A877A1-922F-4406-8CEE-9F822B6702DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", "{B5A877A1-922F-4406-8CEE-9F822B6702DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{3230E0AC-74FE-4521-AE1A-2F49490A2E93}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "Services\Services.csproj", "{3230E0AC-74FE-4521-AE1A-2F49490A2E93}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caching", "Caching\Caching.csproj", "{8C33289C-7F2C-4FDF-AF51-CCF26728308B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{3230E0AC-74FE-4521-AE1A-2F49490A2E93}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3230E0AC-74FE-4521-AE1A-2F49490A2E93}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3230E0AC-74FE-4521-AE1A-2F49490A2E93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C33289C-7F2C-4FDF-AF51-CCF26728308B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C33289C-7F2C-4FDF-AF51-CCF26728308B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C33289C-7F2C-4FDF-AF51-CCF26728308B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C33289C-7F2C-4FDF-AF51-CCF26728308B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
