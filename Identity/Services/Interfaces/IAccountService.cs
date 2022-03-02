@@ -16,5 +16,6 @@ namespace Identity.Services.Interfaces
         Task<BaseResponse<AuthenticationResponse>> RefreshTokenAsync(RefreshTokenRequest request);
         Task<BaseResponse<string>> LogoutAsync(string userEmail);
         Task<List<ApplicationUser>> GetUsers();
+        Task<BaseResponse<string>> DeleteUser(DeleteRequest request);
     }
 }

@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Models.DTOs.Account
 {
-    public class AuthenticationRequest
+    public class DeleteRequest
     {
-        public string UserName { get; set; }
-        public string Password { get; set; }
+        public string Email { get; set; }
     }
 }

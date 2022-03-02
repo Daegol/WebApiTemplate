@@ -8,6 +8,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Models.Settings;
+using Services.Interfaces;
+using Services.Concrete;
 using System.Collections.Generic;
 
 namespace Core
@@ -31,6 +33,11 @@ namespace Core
                 options.UseSqlServer(config.GetConnectionString("DefaultConnection"));
             });
             services.AddTransient<IDbContext, ApplicationDbContext>();
+        }
+
+        public static void AddAppServices(this IServiceCollection services, IConfiguration config)
+        {
+            services.AddTransient<ILoginLogService, LoginLogService>();
         }
         public static void AddRepoServices(this IServiceCollection services, IConfiguration config)
         {

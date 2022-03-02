@@ -1,22 +1,13 @@
 using HealthChecks.UI.Client;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.OpenIdConnect;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using WebApi.Extensions;
 using Identity;
 using Core;
@@ -24,6 +15,7 @@ using Services.Interfaces;
 using WebApi.Services;
 using WebApi.Helpers;
 using Caching;
+using Data.Mongo;
 
 namespace ProjectTemplate
 {
@@ -38,9 +30,11 @@ namespace ProjectTemplate
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMongo(Configuration);
             services.AddLogging(o => o.AddSerilog());
             services.AddIdentity(Configuration);
             services.AddSharedServices(Configuration);
+            services.AddAppServices(Configuration);
             services.AddApplicationSqlServer(Configuration);
             services.AddRepoServices(Configuration);
             services.AddRedis(Configuration);

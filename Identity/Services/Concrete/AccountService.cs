@@ -46,23 +46,23 @@ namespace Identity.Services.Concrete
 
         public async Task<BaseResponse<AuthenticationResponse>> AuthenticateAsync(AuthenticationRequest request)
         {
-            ApplicationUser user = await _userManager.FindByEmailAsync(request.Email.Trim());
+            ApplicationUser user = await _userManager.FindByNameAsync(request.UserName.Trim());
 
             if(user == null)
             {
-                throw new ApiException($"You are not registered with '{request.Email}'.") { StatusCode = (int)HttpStatusCode.BadRequest };
+                throw new ApiException($"You are not registered with '{request.UserName}'.") { StatusCode = (int)HttpStatusCode.BadRequest };
             }
 
             if (!user.EmailConfirmed)
             {
-                throw new ApiException($"Account Not Confirmed for '{request.Email}'.") { StatusCode = (int)HttpStatusCode.BadRequest };
+                throw new ApiException($"Account Not Confirmed for '{request.UserName}'.") { StatusCode = (int)HttpStatusCode.BadRequest };
             }
 
             SignInResult signInResult = await _signInManager.PasswordSignInAsync(user, request.Password, false, lockoutOnFailure: false);
 
             if (!signInResult.Succeeded)
             {
-                throw new ApiException($"Invalid Credentials for '{request.Email}'.") { StatusCode = (int)HttpStatusCode.BadRequest };
+                throw new ApiException($"Invalid Credentials for '{request.UserName}'.") { StatusCode = (int)HttpStatusCode.BadRequest };
             }
 
             string ipAddress = IpHelper.GetIpAddress();
@@ -204,6 +204,22 @@ namespace Identity.Services.Concrete
             else
             {
                 throw new ApiException($"Error occured while reseting the password. Please try again.");
+            }
+        }
+
+        public async Task<BaseResponse<string>> DeleteUser(DeleteRequest request)
+        {
+            var user = await _userManager.FindByEmailAsync(request.Email);
+            if (user == null) throw new ApiException($"User '{request.Email}' does not exist");
+
+            var result = await _userManager.DeleteAsync(user);
+            if(result.Succeeded)
+            {
+                return new BaseResponse<string>(request.Email, message: "User deleted");
+            }
+            else
+            {
+                throw new ApiException($"Error occured while deleting the user. Please try again.");
             }
         }
 

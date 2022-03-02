@@ -8,8 +8,10 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Events;
+using Serilog.Sinks.Elasticsearch;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -17,6 +19,12 @@ namespace ProjectTemplate
 {
     public class Program
     {
+        private static IConfiguration Configuration { get; } = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json", true, true)
+            .AddEnvironmentVariables()
+            .Build();
+
         public async static Task Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
@@ -33,23 +41,22 @@ namespace ProjectTemplate
                 .MinimumLevel.Override("System", LogEventLevel.Warning)
                 .WriteTo.File("log.txt", rollingInterval: RollingInterval.Day)
                 .WriteTo.Console()
-                .WriteTo.Seq(configuration.GetSection("Logging:Seq:Url").Value)
-                //.WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri(""))
-                //{
-                //    AutoRegisterTemplate = true,
-                //    OverwriteTemplate = true,
-                //    DetectElasticsearchVersion = true,
-                //    AutoRegisterTemplateVersion = AutoRegisterTemplateVersion.ESv7,
-                //    NumberOfReplicas = 1,
-                //    IndexFormat = "serilog-application-{0:yyyy.MM.dd}",
-                //    NumberOfShards = 2,
-                //    RegisterTemplateFailure = RegisterTemplateRecovery.FailSink,
-                //    FailureCallback = e => Console.WriteLine("Unable to submit event " + e.MessageTemplate),
-                //    EmitEventFailure = EmitEventFailureHandling.WriteToSelfLog |
-                //                       EmitEventFailureHandling.WriteToFailureSink |
-                //                       EmitEventFailureHandling.RaiseCallback
+                .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri(Configuration.GetConnectionString("elasticsearch")))
+                {
+                    AutoRegisterTemplate = true,
+                    OverwriteTemplate = true,
+                    DetectElasticsearchVersion = true,
+                    AutoRegisterTemplateVersion = AutoRegisterTemplateVersion.ESv7,
+                    NumberOfReplicas = 1,
+                    IndexFormat = "serilog-application-{0:yyyy.MM.dd}",
+                    NumberOfShards = 2,
+                    RegisterTemplateFailure = RegisterTemplateRecovery.FailSink,
+                    FailureCallback = e => Console.WriteLine("Unable to submit event " + e.MessageTemplate),
+                    EmitEventFailure = EmitEventFailureHandling.WriteToSelfLog |
+                                       EmitEventFailureHandling.WriteToFailureSink |
+                                       EmitEventFailureHandling.RaiseCallback
 
-                //})
+                })
                 .MinimumLevel.Verbose()
                 .CreateLogger();
 
